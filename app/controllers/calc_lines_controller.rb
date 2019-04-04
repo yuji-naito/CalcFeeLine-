@@ -24,6 +24,7 @@ class CalcLinesController < ApplicationController
     ]
   
   def home
+    @line_histories = LineHistory.where(month: 1..12)
   end
   
   def calc
@@ -37,6 +38,11 @@ class CalcLinesController < ApplicationController
       # :planに想定外の値が入ってきた場合は固定で-1
       @fee = -1
     end
+    
+    @line_history = LineHistory.find_by(month: params[:month])
+    @line_history.update_attributes(fee: @fee, traffice: params[:traffic])
+    
+    @line_histories = LineHistory.where(month: 1..12)
   end
   
   private

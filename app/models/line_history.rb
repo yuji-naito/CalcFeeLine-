@@ -1,0 +1,2 @@
+class LineHistory < ApplicationRecord
+end
