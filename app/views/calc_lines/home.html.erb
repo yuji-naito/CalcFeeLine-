@@ -1,4 +1,27 @@
-<h1>CalcLines#home</h1>
-<p>Find me in app/views/calc_lines/home.html.erb</p>
+<h1>Line@の料金計算サイト</h1>
 
-<%= render 'calc_form' %>
+<p>
+  本サイトは4月に改訂された料金システムに沿って通数から料金を計算するサイトです。</br>
+  プランを選択し、月と通数を入力して"計算"をクリックでその月の料金を表示します。</br>
+  ※1年分を保存して最下部に月ごとの料金を表示します。
+</p>
+
+<%= form_for @current_line, url: "/calc_lines/calc", method: 'POST', remote: true do |f| %>
+  <div><%= radio_button "line_history", "plan", "free" %>フリープラン</div>
+  <div><%= radio_button "line_history", "plan", "light" %>ライトプラン</div>
+  <div><%= radio_button "line_history", "plan", "standard" %>スタンダードプラン</div>
+
+  <div>
+    <%= f.label :month, "月" %>
+    <%= f.number_field :month %>
+  </div>
+  <div>
+    <%= f.label :traffic, "通数" %>
+    <%= f.number_field :traffic %>
+  </div>
+  <%= f.submit "計算" %>
+<% end %>
+
+<div id="calc-form">
+  <%= render 'calc_lines/calc_form', current_line: @current_line, line_histories: @line_histories %>
+</div>

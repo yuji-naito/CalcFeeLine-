@@ -1,3 +1,20 @@
-<div class="calc_form">
-  Hello
-</div>
+<% if current_line.present? %>
+  <% fee = current_line.fee %>
+<% else %>
+  <% fee = 0 %>
+<% end %>
+
+<% if flash[:notice].present? %>
+  <%= flash[:notice] %>
+<% end %>
+
+<p>
+  今月の料金：<%= fee %>円
+</p>
+
+<% if line_histories.present? %>
+  <h3>1年間の料金</h3>
+  <% line_histories.each do |line_history| %>
+    <p><%= line_history.month %>月：<%= line_history.fee %>円 <%= line_history.traffic %>通</p>
+  <% end %>
+<% end %>
